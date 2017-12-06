@@ -6,7 +6,10 @@
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
 #include "DefaultLogic.h"
+#include "RemotePlayer.h"
 #include <limits>
+#include <cstdlib>
+
 using namespace std;
 
 Player * getSecondPlayer(){
@@ -37,7 +40,7 @@ Player * getSecondPlayer(){
     }
 }
 
-
+/*
 // makes the objects and runs the game
 int main(){
     Board board(8);
@@ -51,8 +54,35 @@ int main(){
     game.play();
 
 }
+*/
 
-
+using namespace std;
+int main() {
+    RemotePlayer client("127.0.0.1", 8002);
+    try {
+        client.connectToServer();
+    } catch (const char *msg) {
+        cout << "Failed to connect to server. Reason:" << msg << endl;
+        exit(-1);
+    }
+    int num1, num2;
+    char op;
+    int i = 0;
+    while (i<3) {
+        cout << "Enter an exercise (e.g., 15*19):";
+        cin >> num1 >> op >> num2;
+        cout << "Sending exercise: " << num1 << op
+             << num2 << endl;
+        try {
+            int result = client.sendExercise(num1,
+                                             op, num2);
+            cout << "Result: " << result << endl;
+        } catch (const char *msg) {
+            cout << "Failed to send exercise to server. Reason: " << msg << endl;
+        }
+        i++;
+    }
+}
 
 
 
