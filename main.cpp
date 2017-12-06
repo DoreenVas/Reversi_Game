@@ -37,6 +37,7 @@ Player * getSecondPlayer(){
     }
 }
 
+
 // makes the objects and runs the game
 int main(){
     Board board(8);
@@ -50,6 +51,7 @@ int main(){
     game.play();
 
 }
+
 
 
 

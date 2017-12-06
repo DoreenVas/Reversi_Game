@@ -59,7 +59,7 @@ TEST (test_DefaultLogic,possible_moves_check) {
                 logicMoves.push_back(make_pair(i,j));
         }
     }
-    EXPECT_THAT(logicMoves,correctMoves ) << "possible moves of player 'x' are not as they should be";
+    EXPECT_THAT(logicMoves,correctMoves );
 }
 
 /*
@@ -104,14 +104,85 @@ TEST (test_DefaultLogic,no_moves_check) {
 }
 
 
-//add check of flip options +sum
-//add make move correctness and player score update
-
-//hhh
-
+/*
+ we make the next board and check if the possible moves updates the flip options and their sum correctly
+ its 'o' turn
+  1  2  3  4
+1|o| x|  |  |
+..............
+2|x| x| x|  |
+..............
+3| | x| o|  |
+..............
+4| |  |  |  |
+..............
+ */
 TEST (test_DefaultLogic,flip_options_check) {
+    Board board(4);
+    HumanPlayer *rival=new HumanPlayer('x');
+    HumanPlayer *player=new HumanPlayer('o');
+    DefaultLogic logic=DefaultLogic(player,rival);
+    player->setScore(2);
+    rival->setScore(5);
+    board.cellAt(0,0)->setContains('o');
+    board.cellAt(2,2)->setContains('o');
+    board.cellAt(0,1)->setContains('x');
+    board.cellAt(1,0)->setContains('x');
+    board.cellAt(1,1)->setContains('x');
+    board.cellAt(1,2)->setContains('x');
+    board.cellAt(2,1)->setContains('x');
+    logic.possibleMoves(&board);
+    EXPECT_EQ(board.cellAt(0,2)->getFlipSum(),2);//total flips of 'x' disks possible need to be 2
+    EXPECT_EQ(board.cellAt(2,0)->getFlipSum(),2);
+    int correctFlipOptions[3][3];
+    for (int i=0;i<3;i++) {
+        for (int j = 0; j < 3; j++)
+            correctFlipOptions[i][j] = 0;
+    }
+    correctFlipOptions[1][0]=1;
+    correctFlipOptions[2][1]=1;
+    for (int i=0;i<3;i++)
+        for (int j = 0; j < 3; j++)
+            EXPECT_EQ(board.cellAt(0,2)->getFlipOptions(i,j),correctFlipOptions[i][j]);
+}
+
+/*
+check make move correctness and players score correct update
+ we test the original board of size 4:
+  1  2  3  4
+1| |  |  |  |
+..............
+2| | o| x|  |
+..............
+3| | x| o|  |
+..............
+4| |  |  |  |
+..............
+*/
+TEST (test_DefaultLogic,make_move_check) {
     Board board(4);
     HumanPlayer *player=new HumanPlayer('x');
     HumanPlayer *rival=new HumanPlayer('o');
     DefaultLogic logic=DefaultLogic(player,rival);
+    logic.possibleMoves(&board);
+    logic.makeMove(0,1,&board);
+    EXPECT_EQ(player->getScore(),4);
+    EXPECT_EQ(rival->getScore(),1);
+
+    //now we compare the board disks
+    char correctBoardTable[4][4];
+    for (int i=0;i<3;i++) {
+        for (int j = 0; j < 3; j++)
+            correctBoardTable[i][j] = ' ';
+    }
+    correctBoardTable[0][1] = 'x';
+    correctBoardTable[1][1] = 'x';
+    correctBoardTable[1][2] = 'x';
+    correctBoardTable[2][1] = 'x';
+    correctBoardTable[2][2] = 'o';
+
+    for (int i=0;i<3;i++)
+        for (int j = 0; j < 3; j++)
+            EXPECT_EQ(correctBoardTable[i][j],board.cellAt(i,j)->getContains());
+
 }
