@@ -9,10 +9,10 @@ AIPlayer::AIPlayer(char x):Player::Player(x){}
 AIPlayer::AIPlayer(const Player &other) : Player::Player(other) {}
 
 void AIPlayer::preMovePrint(Board *board) {
-    possibleMovesVector(board);
+
 }
 
-int *AIPlayer::chooseMove(Board *board,GameLogic* logic) {
+pair<int,int> AIPlayer::chooseMove(Board *board,GameLogic* logic) {
     int minScoreForPlayerMove=INT_MAX;
     int rowMin=INT_MAX;
     int colMin=INT_MAX;
@@ -53,15 +53,14 @@ int *AIPlayer::chooseMove(Board *board,GameLogic* logic) {
             colMin=movesVec[i].second;
         }
     }
-    arr[0]=rowMin;
-    arr[1]=colMin;
-    int *arrP;
-    arrP=arr;
-    return arrP;
+    chosenMove.first=rowMin;
+    chosenMove.second=colMin;
+    return chosenMove;
 }
 
-void AIPlayer::postMovePrint(){
-    cout <<disk<< " played  " <<arr[0]+1<<","<<arr[1]+1<<  endl;
+int AIPlayer::postMovePrint(){
+    cout <<disk<< " played  " <<chosenMove.first+1<<","<<chosenMove.second+1<<  endl;
+    return 0;
 }
 
 

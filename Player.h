@@ -6,6 +6,8 @@
 #include "GameLogic.h"
 #include <vector>
 using namespace std;
+#define PROBLEM -5
+#define NO_MOVE -2
 class GameLogic;
 
 /*****************************************************************************************************
@@ -76,14 +78,14 @@ public:
 * the output: none
 * the function operation: makes a print after the move is made
 ****************************************************************************************/
-    virtual void postMovePrint()=0;
+    virtual int postMovePrint()=0;
 /***************************************************************************************
 * function name: chooseMove (pure virtual)
 * the input: board, logic pointers
 * the output: an array of 2 ints
 * the function operation: return the row and col (in an array) of the next move the player wants to make
 ****************************************************************************************/
-    virtual int* chooseMove(Board* board,GameLogic* logic)=0;
+    virtual pair<int,int> chooseMove(Board* board,GameLogic* logic)=0;
 
 /***************************************************************************************
 * function name: possibleMovesVector
@@ -93,7 +95,7 @@ public:
 * it to the vector. if the player has no moves than he updates setNoMoves to false
 ****************************************************************************************/
     void possibleMovesVector(Board *board);
-
+    pair<int,int> chosenMove;
 
 protected:
     char disk;

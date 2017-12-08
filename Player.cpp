@@ -41,11 +41,6 @@ void Player::possibleMovesVector(Board *board) {
                 movesVec.push_back(make_pair(row,col));
         }
     }
-    if (!movesVec.empty())
-        setNoMoves(false);
-    else
-        setNoMoves(true);
-
 }
 
 

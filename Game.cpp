@@ -1,7 +1,11 @@
 
 
 #include "Game.h"
+#include "HumanPlayer.h"
+#include "RemotePlayer.h"
 #include <iostream>
+#include <limits>
+
 using namespace std;
 
 
@@ -20,19 +24,32 @@ void Game::play() {
         board->printBoard();
         logic->possibleMoves(board);
         player->preMovePrint(board);
-        if (player->isNoMoves()  && !rival->isNoMoves()) {
+        if (player->isNoMoves()  && !rival->isNoMoves() && dynamic_cast<RemotePlayer*>(player)==NULL) {
             cout << "No moves available, hence your turn is passed "<<endl;
+            cout << "Enter any key to continue." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if(dynamic_cast<HumanPlayer*>(player)!=NULL && dynamic_cast<HumanPlayer*>(player)->gameType==REMOTE_GAME){
+                player->chosenMove.first=NO_MOVE;
+                player->postMovePrint();
+            }
         }
         else if (player->isNoMoves() && rival->isNoMoves() ) {
-            cout << "You also have no moves available, So the game is over"<<endl;
+            cout << player->getDisk()<<" also has no moves available, So the game is over"<<endl;
             printEnd();
             break;
         }
         else {
-            int *arrP=player->chooseMove(board,logic);
-            logic->makeMove(*arrP, *(arrP+1),board);
-            logic->resetPossibleMoves(board);
-            player->postMovePrint();
+            pair<int,int> chosenMove=player->chooseMove(board,logic);
+            if (chosenMove.first==PROBLEM)
+                return;
+            else if (chosenMove.first!=NO_MOVE) {
+                logic->makeMove(chosenMove.first, chosenMove.second, board);
+                logic->resetPossibleMoves(board);
+                int check = player->postMovePrint();
+                if (check == PROBLEM)
+                    return;
+            }
         }
         if (player->getScore() + rival->getScore() == board->getBoardSize()*board->getBoardSize()) {
             cout << "Final board:" << endl << endl;

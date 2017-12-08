@@ -2,16 +2,19 @@
 #ifndef REVERSI_ONLINEPLAYER_H
 #define REVERSI_ONLINEPLAYER_H
 
+#include "Player.h"
+#include "ClientServerCommunication.h"
 
-class RemotePlayer {
+class RemotePlayer : public Player {
+
 public:
-    RemotePlayer(const char *serverIP, int serverPort);
-    void connectToServer();
-    int sendExercise(int arg1, char op, int arg2);
+    RemotePlayer(char x, ClientServerCommunication connector);
+    void preMovePrint(Board *board);
+    pair<int,int> chooseMove(Board* board,GameLogic* logic);
+    int postMovePrint();
+
 private:
-    const char *serverIP;
-    int serverPort;
-    int clientSocket;
+    ClientServerCommunication connector;
 };
 
 

@@ -8,16 +8,16 @@
 TEST (test_AIPlayer,simple_choose){
     Board board(8);
     AIPlayer *comp=new AIPlayer('o');
-    HumanPlayer *human=new HumanPlayer('x');
+    HumanPlayer *human=new HumanPlayer('x',LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(comp,human);//comp is currently playing
     human->setScore(4);
     comp->setScore(1);
     board.cellAt(2,3)->setContains('x');// actual cell on board 3,4
     board.cellAt(3,3)->setContains('x');// actual cell on board 4,4
     logic.possibleMoves(&board);
-    int *arrP=comp->chooseMove(&board,&logic);
-    EXPECT_EQ(*arrP,2);
-    EXPECT_EQ(*(arrP+1),2);//actual cell on board 3,3
+    pair<int,int> move=comp->chooseMove(&board,&logic);
+    EXPECT_EQ(move.first,2);
+    EXPECT_EQ(move.second,2);//actual cell on board 3,3
 
 }
 
@@ -25,7 +25,7 @@ TEST (test_AIPlayer,simple_choose){
 TEST (test_AIPlayer,no_moves_for_rival) {
     Board board(4);
     AIPlayer *comp=new AIPlayer('o');
-    HumanPlayer *human=new HumanPlayer('x');
+    HumanPlayer *human=new HumanPlayer('x',LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(comp,human);//comp is currently playing
     human->setScore(6);
     comp->setScore(3);
@@ -40,8 +40,8 @@ TEST (test_AIPlayer,no_moves_for_rival) {
     board.cellAt(2,2)->setContains('x');
     board.cellAt(2,3)->setContains('x');
     logic.possibleMoves(&board);
-    int *arrP=comp->chooseMove(&board,&logic);
-    EXPECT_EQ(*arrP,2);
-    EXPECT_EQ(*(arrP+1),0);
+    pair<int,int> move=comp->chooseMove(&board,&logic);
+    EXPECT_EQ(move.first,2);
+    EXPECT_EQ(move.second,0);
 }
 

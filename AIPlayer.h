@@ -24,11 +24,9 @@ public:
     AIPlayer(const Player &other);
     //all has description in Player class
     void preMovePrint(Board *board);
-    void postMovePrint();
-    int* chooseMove(Board* board,GameLogic* logic);
+    int postMovePrint();
+    pair<int,int> chooseMove(Board* board,GameLogic* logic);
 
-private:
-    int arr[2];
 };
 
 

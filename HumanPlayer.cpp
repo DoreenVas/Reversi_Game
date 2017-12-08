@@ -2,11 +2,17 @@
 #include <iostream>
 #include "HumanPlayer.h"
 #include <limits>
+#include <cstdlib>
+
 using namespace std;
 
-HumanPlayer::HumanPlayer(char x):Player::Player(x){}//calls the Class 'Player' constructor
+HumanPlayer::HumanPlayer(char x,int gameType):Player(x),gameType(gameType),connector("0",0){}//calls the Class 'Player' constructor
 
-HumanPlayer::HumanPlayer(const Player &other):Player::Player(other){}
+HumanPlayer::HumanPlayer(char x, int gameType, ClientServerCommunication connector):Player(x)
+        ,gameType(gameType),connector(connector) {}
+
+HumanPlayer::HumanPlayer(const Player &other):Player(other),connector("0",0){}
+
 
 void HumanPlayer::preMovePrint(Board *board) {
     cout <<disk<< ": It's your move" << endl;
@@ -15,7 +21,7 @@ void HumanPlayer::preMovePrint(Board *board) {
     printPossibleMoves();
 }
 
-int *HumanPlayer::chooseMove(Board* board,GameLogic* logic) {
+pair<int,int> HumanPlayer::chooseMove(Board* board,GameLogic* logic) {
     int a,b;
     bool validInput=false;
     cout << endl << "Please enter your move, write row than space than col: " << endl;
@@ -35,10 +41,9 @@ int *HumanPlayer::chooseMove(Board* board,GameLogic* logic) {
             cin.clear();
         }
     }
-    int arr[2]={a-1,b-1};
-    int *arrP;
-    arrP=arr;
-    return arrP;
+    chosenMove.first=a-1;
+    chosenMove.second=b-1;
+    return chosenMove;
 }
 
 
@@ -48,7 +53,13 @@ void HumanPlayer::printPossibleMoves() {
     }
 }
 
-void HumanPlayer::postMovePrint() {
-
+int HumanPlayer::postMovePrint() {
+    if (gameType==REMOTE_GAME){
+        try{
+            connector.sendMoveToServer(chosenMove);
+        }catch (const char *msg){
+            cout<<msg<<endl;
+            return PROBLEM;
+        }
+    }
 }
-

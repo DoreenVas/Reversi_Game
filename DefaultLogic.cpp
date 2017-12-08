@@ -11,6 +11,7 @@ DefaultLogic::DefaultLogic(const GameLogic &other) : GameLogic(other){}
 
 
 void DefaultLogic::possibleMoves(Board *board) {
+    player->setNoMoves(true);
     for (int row = 0; row < board->getBoardSize() ; row++) {
         for (int col = 0; col < board->getBoardSize(); col++) {
             if (board->cellAt(row,col)->getContains()==player->getDisk())
@@ -59,7 +60,7 @@ void DefaultLogic::checkDirection(int row,int col,int deltaRow,int deltaCol,Boar
     if(i>=0 && i<board->getBoardSize()  && j>=0 && j<board->getBoardSize()  && board->cellAt(i,j)->getContains()==' ') {
         board->cellAt(i,j)->setOption(true);
         board->cellAt(i,j)->changeFlipOptions(1-deltaRow,1-deltaCol,sum);// we save the sum in the direction we came from
-
+        player->setNoMoves(false);
     }
 }
 
