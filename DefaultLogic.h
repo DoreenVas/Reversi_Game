@@ -47,14 +47,14 @@ private:
 * the input: row and col of the cell we are checking
 * the output: none
 * the function operation: checks the close cell in each direction to see if it
-* contains the rival disk. if so sends it to checkDirection
+* contains the rival type(Black/White). if so sends it to checkDirection
 ****************************************************************************************/
     void checkCell(int row, int col,Board *board);
 /***************************************************************************************
 * function name:  checkDirection
 * the input: row and col of the cell we are checking and also the delta so we know which way to check
 * the output: none
-* the function operation:while we see a rival disk we continue in that way,if it ends with a space we
+* the function operation:while we see a rival type disk we continue in that way,if it ends with a space we
 * set the cell option to true and update the changeFlipOptions with the sum we reached.
 ****************************************************************************************/
     void checkDirection(int row,int col,int deltaRow,int deltaCol,Board *board);

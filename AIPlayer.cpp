@@ -5,7 +5,7 @@
 #include "DefaultLogic.h"
 
 
-AIPlayer::AIPlayer(char x):Player::Player(x){}
+AIPlayer::AIPlayer(Contains x):Player::Player(x){}
 AIPlayer::AIPlayer(const Player &other) : Player::Player(other) {}
 
 void AIPlayer::preMovePrint(Board *board) {
@@ -59,7 +59,7 @@ pair<int,int> AIPlayer::chooseMove(Board *board,GameLogic* logic) {
 }
 
 int AIPlayer::postMovePrint(){
-    cout <<disk<< " played  " <<chosenMove.first+1<<","<<chosenMove.second+1<<  endl;
+    cout <<type<< " played  " <<chosenMove.first+1<<","<<chosenMove.second+1<<  endl;
     return 0;
 }
 

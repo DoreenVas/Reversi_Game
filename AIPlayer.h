@@ -10,11 +10,11 @@ class AIPlayer: public Player {
 public:
 /***************************************************************************************************
 * constructor name:AIPlayer
-* the input: char x
+* the input: Contains x
 * the output: none
 * the function operation:initializes by using the base Player constructor
 ***************************************************************************************************/
-    explicit AIPlayer(char x);
+    explicit AIPlayer(Contains x);
 /***************************************************************************************************
 * constructor name:AIPlayer
 * the input: other player
@@ -25,6 +25,12 @@ public:
     //all has description in Player class
     void preMovePrint(Board *board);
     int postMovePrint();
+/***************************************************************************************
+* function name: chooseMove
+* the input: Board* board,GameLogic* logic
+* the output: the chosen move pair
+* the function operation: calculates the best move by the minMax algorithm
+****************************************************************************************/
     pair<int,int> chooseMove(Board* board,GameLogic* logic);
 
 };

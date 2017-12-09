@@ -3,7 +3,7 @@
 #include "RemotePlayer.h"
 
 
-RemotePlayer::RemotePlayer(char x, ClientServerCommunication connector):Player(x),connector(connector) {
+RemotePlayer::RemotePlayer(Contains x, ClientServerCommunication connector):Player(x),connector(connector) {
 }
 
 void RemotePlayer::preMovePrint(Board *board) {
@@ -24,7 +24,7 @@ pair<int,int> RemotePlayer::chooseMove(Board *board, GameLogic *logic) {
 }
 
 int RemotePlayer::postMovePrint() {
-    cout <<disk<< " played  " <<chosenMove.first+1<<","<<chosenMove.second+1<<  endl;
+    cout <<type<< " played  " <<chosenMove.first+1<<","<<chosenMove.second+1<<  endl;
     return 0;
 }
 

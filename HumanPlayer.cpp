@@ -6,16 +6,16 @@
 
 using namespace std;
 
-HumanPlayer::HumanPlayer(char x,int gameType):Player(x),gameType(gameType),connector("0",0){}//calls the Class 'Player' constructor
+HumanPlayer::HumanPlayer(Contains x,int gameType):Player(x),gameType(gameType),connector("0",0){}//calls the Class 'Player' constructor
 
-HumanPlayer::HumanPlayer(char x, int gameType, ClientServerCommunication connector):Player(x)
+HumanPlayer::HumanPlayer(Contains x, int gameType, ClientServerCommunication connector):Player(x)
         ,gameType(gameType),connector(connector) {}
 
 HumanPlayer::HumanPlayer(const Player &other):Player(other),connector("0",0){}
 
 
 void HumanPlayer::preMovePrint(Board *board) {
-    cout <<disk<< ": It's your move" << endl;
+    cout <<type<< ": It's your move" << endl;
     cout << "Your possible moves are: ";
     possibleMovesVector(board);
     printPossibleMoves();

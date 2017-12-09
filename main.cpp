@@ -8,7 +8,7 @@
 #include "DefaultLogic.h"
 #include "RemotePlayer.h"
 #include <limits>
-#include <cstdlib>
+#include <fstream>
 
 using namespace std;
 
@@ -50,15 +50,29 @@ int main(){
     int opponentType=getOpponentType();
     switch (opponentType){
         case 1:
-            player1P=new HumanPlayer('x',LOCAL_GAME);
-            player2P =new HumanPlayer('o',LOCAL_GAME);
+            player1P=new HumanPlayer(Black,LOCAL_GAME);
+            player2P =new HumanPlayer(White,LOCAL_GAME);
             break;
         case 2:
-            player1P=new HumanPlayer('x',LOCAL_GAME);
-            player2P =new AIPlayer('o');
+            player1P=new HumanPlayer(Black,LOCAL_GAME);
+            player2P =new AIPlayer(White);
             break;
         case 3:
-            ClientServerCommunication client("127.0.0.1", 8003);
+            //read ip and port from file
+            int port;
+            string ip;
+            ifstream settingFile;
+            settingFile.open("../client_settings.txt");
+            if(!settingFile.is_open()){
+                cout<<"failed to open file";
+                return 0;
+            }
+            settingFile>>ip;
+            settingFile>>port;
+            settingFile.close();
+            const char* ip2=ip.c_str();
+
+            ClientServerCommunication client(ip2, port);
             try{
                client.connectToServer();
             }catch (const char *msg){
@@ -67,11 +81,11 @@ int main(){
             }
             int clientTurn=client.getClientTurn();
             if(clientTurn==FIRST_PLAYER){
-                player1P=new HumanPlayer('x',REMOTE_GAME,client);
-                player2P =new RemotePlayer('o',client);
+                player1P=new HumanPlayer(Black,REMOTE_GAME,client);
+                player2P =new RemotePlayer(White,client);
             }else{
-                player1P =new RemotePlayer('x',client);
-                player2P=new HumanPlayer('o',REMOTE_GAME,client);
+                player1P =new RemotePlayer(Black,client);
+                player2P=new HumanPlayer(White,REMOTE_GAME,client);
             }
     }
 

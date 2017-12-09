@@ -67,13 +67,13 @@ void Board::setInitialState()
 	size_t centerTopLeftRow = (m_BoardSize / 2) - 1;
 	size_t centerTopLeftColumn = (m_BoardSize / 2) - 1;
 
-	board[centerTopLeftRow][centerTopLeftColumn].setContains('o');
+	board[centerTopLeftRow][centerTopLeftColumn].setContains(White);
 	board[centerTopLeftRow][centerTopLeftColumn].setOption(false);
-	board[centerTopLeftRow + 1][centerTopLeftColumn + 1].setContains('o');
+	board[centerTopLeftRow + 1][centerTopLeftColumn + 1].setContains(White);
 	board[centerTopLeftRow + 1][centerTopLeftColumn + 1].setOption(false);
-	board[centerTopLeftRow][centerTopLeftColumn + 1].setContains('x');
+	board[centerTopLeftRow][centerTopLeftColumn + 1].setContains(Black);
 	board[centerTopLeftRow][centerTopLeftColumn + 1].setOption(false);
-	board[centerTopLeftRow + 1][centerTopLeftColumn].setContains('x');
+	board[centerTopLeftRow + 1][centerTopLeftColumn].setContains(Black);
 	board[centerTopLeftRow + 1][centerTopLeftColumn].setOption(false);
 }
 
@@ -83,16 +83,26 @@ size_t Board::getBoardSize() const
 }
 
 void Board::printBoard() const {
-    cout << " ";
+    cout << "   ";
     for (size_t i = 0; i < m_BoardSize; ++i) {
         cout << i + 1 << "  ";
     }
     cout << endl;
 
     for (int row = 0; row < m_BoardSize; row++) {
-        cout << row + 1 << "|";
+        cout << row + 1 << "| ";
         for (int col = 0; col < m_BoardSize; col++) {
-            cout << board[row][col].getContains() << "| ";
+            switch (board[row][col].getContains()) {
+				case Empty:
+					cout << " | ";
+					break;
+				case White:
+					cout << "o| ";
+					break;
+				case Black:
+					cout << "x| ";
+					break;
+			}
         }
 
         cout << endl << "..";

@@ -35,7 +35,7 @@ void Game::play() {
             }
         }
         else if (player->isNoMoves() && rival->isNoMoves() ) {
-            cout << player->getDisk()<<" also has no moves available, So the game is over"<<endl;
+            cout << player->getType()<<" also has no moves available, So the game is over"<<endl;
             printEnd();
             break;
         }
@@ -72,9 +72,9 @@ void Game:: swap(Player *&player, Player *&rival)//we want the pointers we sent 
 
 void Game::printEnd() const {
     if (player->getScore() > rival->getScore()) {
-        cout << "The winner is " << player->getDisk() << "!!  with a score of: " << player->getScore();
+        cout << "The winner is " << player->getType() << "!!  with a score of: " << player->getScore();
     } else if (player->getScore() < rival->getScore()) {
-        cout << "The winner is " << rival->getDisk() << "!!  with a score of: " << rival->getScore();
+        cout << "The winner is " << rival->getType() << "!!  with a score of: " << rival->getScore();
     } else cout << "its a tie!";
 }
 

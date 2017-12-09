@@ -18,11 +18,11 @@ class Player{
 public:
 /***************************************************************************************************
 * constructor name:Player
-* the input: char x
+* the input: Contains x
 * the output: none
-* the function operation:initializes the score to (2),noMoves to (false),and disk to the char we got(x)                               *
+* the function operation:initializes the score to (2),noMoves to (false),and disk to the type we got(x)                               *
 ***************************************************************************************************/
-    explicit Player(char x);
+    explicit Player(Contains x);
 /***************************************************************************************************
 * constructor name:Player
 * the input: other player
@@ -59,12 +59,12 @@ public:
 ****************************************************************************************/
     void setScore(int score);
 /***************************************************************************************
-* function name: getDisk
+* function name: getType
 * the input: none
 * the output: none
-* the function operation: returns the disk of the player
+* the function operation: returns the type of the player
 ****************************************************************************************/
-    char getDisk() const;
+    Contains getType() const;
 /***************************************************************************************
 * function name: preMovePrint (pure virtual)
 * the input: board pointer
@@ -83,7 +83,7 @@ public:
 * function name: chooseMove (pure virtual)
 * the input: board, logic pointers
 * the output: an array of 2 ints
-* the function operation: return the row and col (in an array) of the next move the player wants to make
+* the function operation: return the row and col (in a pair) of the next move the player wants to make
 ****************************************************************************************/
     virtual pair<int,int> chooseMove(Board* board,GameLogic* logic)=0;
 
@@ -98,7 +98,7 @@ public:
     pair<int,int> chosenMove;
 
 protected:
-    char disk;
+    Contains type;
     int score;
     bool noMoves;
     vector< pair<int,int> > movesVec;// a vector of all the cells which are possible moves

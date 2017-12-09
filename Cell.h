@@ -6,6 +6,8 @@
 * class name: Cell
 * description: each object is a cell inside board
 ******************************************************************************************************/
+enum Contains {Black,White,Empty};
+
 class Cell {
 public:
 /***************************************************************************************************
@@ -17,18 +19,18 @@ public:
     Cell();
 /***************************************************************************************
 * function name: setContains
-* the input: a char contains
+* the input: Contains contains
 * the output: none
-* the function operation: changes the cell value according to the char it receives
+* the function operation: changes the cell value according to the value it receives
 ****************************************************************************************/
-    void setContains(char contains);
+    void setContains( Contains contains);
 /***************************************************************************************
 * function name: getContains
 * the input: none
 * the output: the value of the cell
 * the function operation: access directly
 ****************************************************************************************/
-    char getContains()const ;
+    Contains getContains()const ;
 /***************************************************************************************
 * function name: isOption
 * the input: none
@@ -64,6 +66,8 @@ public:
 * the function operation: access directly and returns
 ****************************************************************************************/
     const int getFlipOptions(int row,int col) const;
+
+
 /***************************************************************************************
 * function name: getFlipSum
 * the input: none
@@ -71,11 +75,9 @@ public:
 * the function operation: goes throw the flipOptions array and adds each direction flips to the sum
 ****************************************************************************************/
     const int getFlipSum() const;
-
-
 private:
     bool option; // true if it's possible to put a disk there, otherwise false
-    char contains; // the value of the cell ('x' or 'o' or ' ')
+    Contains contains; //  Black/White/Empty
     int flipOptions[3][3]; //the number of rival disks you can change in each direction. you put the disk in the
     // middle so all the direction are the same as represented around you
 

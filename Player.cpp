@@ -2,18 +2,18 @@
 #include "Player.h"
 
 
-Player::Player(char x):score(2),noMoves(false),disk(x) {
+Player::Player(Contains x):score(2),noMoves(false),type(x) {
 
 }
 
 Player::Player(const Player &other){
-    this->disk=other.disk;
+    this->type=other.type;
     this->score=other.score;
     this->noMoves=other.noMoves;
 }
 
-char Player::getDisk() const {
-    return disk;
+Contains Player::getType() const {
+    return type;
 }
 
 void Player::setScore(int score) {

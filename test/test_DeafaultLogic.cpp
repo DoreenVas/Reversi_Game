@@ -27,21 +27,21 @@ its player 'x' turn and we especially want to check that the bound at 3,1 is rec
  */
 TEST (test_DefaultLogic,possible_moves_check) {
     Board board(8);
-    HumanPlayer *player=new HumanPlayer('x',LOCAL_GAME);
-    HumanPlayer *rival=new HumanPlayer('o',LOCAL_GAME);
+    HumanPlayer *player=new HumanPlayer(Black,LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     player->setScore(5);
     rival->setScore(5);
-    board.cellAt(2,0)->setContains('o');
-    board.cellAt(1,1)->setContains('o');
-    board.cellAt(2,1)->setContains('o');
-    board.cellAt(2,2)->setContains('o');
-    board.cellAt(4,4)->setContains('o');
-    board.cellAt(2,3)->setContains('x');
-    board.cellAt(3,2)->setContains('x');
-    board.cellAt(3,3)->setContains('x');
-    board.cellAt(4,3)->setContains('x');
-    board.cellAt(3,4)->setContains('x');
+    board.cellAt(2,0)->setContains(White);
+    board.cellAt(1,1)->setContains(White);
+    board.cellAt(2,1)->setContains(White);
+    board.cellAt(2,2)->setContains(White);
+    board.cellAt(4,4)->setContains(White);
+    board.cellAt(2,3)->setContains(Black);
+    board.cellAt(3,2)->setContains(Black);
+    board.cellAt(3,3)->setContains(Black);
+    board.cellAt(4,3)->setContains(Black);
+    board.cellAt(3,4)->setContains(Black);
     logic.possibleMoves(&board);
     vector< pair<int,int> > correctMoves;
     //inserting the correct moves
@@ -76,21 +76,21 @@ its player 'x' turn and we expect to see no moves possible
  */
 TEST (test_DefaultLogic,no_moves_check) {
     Board board(4);
-    HumanPlayer *player=new HumanPlayer('x',LOCAL_GAME);
-    HumanPlayer *rival=new HumanPlayer('o',LOCAL_GAME);
+    HumanPlayer *player=new HumanPlayer(Black,LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     player->setScore(4);
     rival->setScore(6);
-    board.cellAt(0,0)->setContains('o');
-    board.cellAt(0,1)->setContains('o');
-    board.cellAt(0,2)->setContains('o');
-    board.cellAt(1,0)->setContains('o');
-    board.cellAt(1,1)->setContains('o');
-    board.cellAt(2,0)->setContains('o');
-    board.cellAt(1,2)->setContains('x');
-    board.cellAt(2,1)->setContains('x');
-    board.cellAt(2,2)->setContains('x');
-    board.cellAt(2,3)->setContains('x');
+    board.cellAt(0,0)->setContains(White);
+    board.cellAt(0,1)->setContains(White);
+    board.cellAt(0,2)->setContains(White);
+    board.cellAt(1,0)->setContains(White);
+    board.cellAt(1,1)->setContains(White);
+    board.cellAt(2,0)->setContains(White);
+    board.cellAt(1,2)->setContains(Black);
+    board.cellAt(2,1)->setContains(Black);
+    board.cellAt(2,2)->setContains(Black);
+    board.cellAt(2,3)->setContains(Black);
     logic.possibleMoves(&board);
     vector< pair<int,int> > logicMoves;
     //getting the moves the Class DefaultLogic calculated
@@ -119,18 +119,18 @@ TEST (test_DefaultLogic,no_moves_check) {
  */
 TEST (test_DefaultLogic,flip_options_check) {
     Board board(4);
-    HumanPlayer *rival=new HumanPlayer('x',LOCAL_GAME);
-    HumanPlayer *player=new HumanPlayer('o',LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(Black,LOCAL_GAME);
+    HumanPlayer *player=new HumanPlayer(White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     player->setScore(2);
     rival->setScore(5);
-    board.cellAt(0,0)->setContains('o');
-    board.cellAt(2,2)->setContains('o');
-    board.cellAt(0,1)->setContains('x');
-    board.cellAt(1,0)->setContains('x');
-    board.cellAt(1,1)->setContains('x');
-    board.cellAt(1,2)->setContains('x');
-    board.cellAt(2,1)->setContains('x');
+    board.cellAt(0,0)->setContains(White);
+    board.cellAt(2,2)->setContains(White);
+    board.cellAt(0,1)->setContains(Black);
+    board.cellAt(1,0)->setContains(Black);
+    board.cellAt(1,1)->setContains(Black);
+    board.cellAt(1,2)->setContains(Black);
+    board.cellAt(2,1)->setContains(Black);
     logic.possibleMoves(&board);
     EXPECT_EQ(board.cellAt(0,2)->getFlipSum(),2);//total flips of 'x' disks possible need to be 2
     EXPECT_EQ(board.cellAt(2,0)->getFlipSum(),2);
@@ -161,8 +161,8 @@ check make move correctness and players score correct update
 */
 TEST (test_DefaultLogic,make_move_check) {
     Board board(4);
-    HumanPlayer *player=new HumanPlayer('x',LOCAL_GAME);
-    HumanPlayer *rival=new HumanPlayer('o',LOCAL_GAME);
+    HumanPlayer *player=new HumanPlayer(Black,LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     logic.possibleMoves(&board);
     logic.makeMove(0,1,&board);
@@ -173,13 +173,13 @@ TEST (test_DefaultLogic,make_move_check) {
     char correctBoardTable[4][4];
     for (int i=0;i<3;i++) {
         for (int j = 0; j < 3; j++)
-            correctBoardTable[i][j] = ' ';
+            correctBoardTable[i][j] = Empty;
     }
-    correctBoardTable[0][1] = 'x';
-    correctBoardTable[1][1] = 'x';
-    correctBoardTable[1][2] = 'x';
-    correctBoardTable[2][1] = 'x';
-    correctBoardTable[2][2] = 'o';
+    correctBoardTable[0][1] = Black;
+    correctBoardTable[1][1] = Black;
+    correctBoardTable[1][2] = Black;
+    correctBoardTable[2][1] = Black;
+    correctBoardTable[2][2] = White;
 
     for (int i=0;i<3;i++)
         for (int j = 0; j < 3; j++)

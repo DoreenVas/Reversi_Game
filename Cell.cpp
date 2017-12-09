@@ -4,11 +4,11 @@
 
 using namespace std;
 
-Cell::Cell():option(false),contains(' ') {
+Cell::Cell():option(false),contains(Empty) {
     clearFlipOptions();
 }
 
-char Cell::getContains() const {
+Contains Cell::getContains() const {
     return contains;
 }
 
@@ -16,7 +16,7 @@ bool Cell::isOption()const {
     return option;
 }
 
-void Cell::setContains(char contains) {
+void Cell::setContains(Contains contains) {
     Cell::contains = contains;
 }
 

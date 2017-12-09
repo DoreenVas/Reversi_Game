@@ -62,7 +62,7 @@ public:
 	* function name: setInitialState
 	* the input: none
 	* the output:none
-	* the function operation: sets the initial state of the board , disks in the beginning
+	* the function operation: sets the initial state of the board
 	****************************************************************************************/
 	void setInitialState();
 	/***************************************************************************************

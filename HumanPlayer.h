@@ -12,23 +12,36 @@ class HumanPlayer: public Player {
 public:
 /***************************************************************************************************
 * constructor name:HumanPlayer
-* the input: char x
+* the input: Contains x, int gameType
 * the output: none
-* the function operation:initializes by using the base Player constructor
+* the function operation:initializes by using the base Player constructor,and the given values,
+ * also initializes the connector to a default non used server for compilation
 ***************************************************************************************************/
-    HumanPlayer(char x, int gameType);
-
-    HumanPlayer(char x, int gameType,ClientServerCommunication connector);
+    HumanPlayer(Contains x, int gameType);
+/***************************************************************************************************
+* constructor name:HumanPlayer
+* the input: Contains x,int gameType,ClientServerCommunication connector
+* the output: none
+* the function operation:initializes by using the base Player constructor and the values received
+***************************************************************************************************/
+    HumanPlayer(Contains x, int gameType,ClientServerCommunication connector);
 /***************************************************************************************************
 * constructor name:HumanPlayer
 * the input: other player
 * the output: none
 * the function operation:it is a copy constructor initialized by the base Player copy constructor
+ * also initializes the connector to a default non used server for compilation
 ***************************************************************************************************/
     HumanPlayer(const Player &other);
     //all has description in Player class
     void preMovePrint(Board *board);
     int postMovePrint();
+/***************************************************************************************
+* function name: chooseMove
+* the input: Board* board,GameLogic* logic
+* the output: the chosen move pair
+* the function operation: receives the move from the player by the console
+****************************************************************************************/
     pair<int,int> chooseMove(Board* board,GameLogic* logic);
     int gameType;
 
