@@ -82,38 +82,6 @@ size_t Board::getBoardSize() const
 	return m_BoardSize;
 }
 
-void Board::printBoard() const {
-    cout << "   ";
-    for (size_t i = 0; i < m_BoardSize; ++i) {
-        cout << i + 1 << "  ";
-    }
-    cout << endl;
-
-    for (int row = 0; row < m_BoardSize; row++) {
-        cout << row + 1 << "| ";
-        for (int col = 0; col < m_BoardSize; col++) {
-            switch (board[row][col].getContains()) {
-				case Empty:
-					cout << " | ";
-					break;
-				case White:
-					cout << "o| ";
-					break;
-				case Black:
-					cout << "x| ";
-					break;
-			}
-        }
-
-        cout << endl << "..";
-        for (size_t i = 0; i < m_BoardSize; i++) {
-            cout << "...";
-        }
-        cout <<endl;
-
-    }
-}
-
 
 Cell* Board::cellAt(int row, int col)const {
     return &board[row][col];

@@ -3,12 +3,15 @@
 #include "../AIPlayer.h"
 #include "../HumanPlayer.h"
 #include "../DefaultLogic.h"
+#include "../ConsoleDisplay.h"
 
 //test for AIPlayer to see if he chooses the right move
 TEST (test_AIPlayer,simple_choose){
     Board board(8);
-    AIPlayer *comp=new AIPlayer(White);
-    HumanPlayer *human=new HumanPlayer(Black,LOCAL_GAME);
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    AIPlayer *comp=new AIPlayer(displayP,White);
+    HumanPlayer *human=new HumanPlayer(displayP,Black,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(comp,human);//comp is currently playing
     human->setScore(4);
     comp->setScore(1);
@@ -24,8 +27,10 @@ TEST (test_AIPlayer,simple_choose){
 //testing if AIPlayer will choose the move which makes the rival with no moves like it should
 TEST (test_AIPlayer,no_moves_for_rival) {
     Board board(4);
-    AIPlayer *comp=new AIPlayer(White);
-    HumanPlayer *human=new HumanPlayer(Black,LOCAL_GAME);
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    AIPlayer *comp=new AIPlayer(displayP,White);
+    HumanPlayer *human=new HumanPlayer(displayP,Black,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(comp,human);//comp is currently playing
     human->setScore(6);
     comp->setScore(3);

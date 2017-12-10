@@ -52,3 +52,5 @@ int* GameLogic::getCurrentScore(){
     return arrP;
 }
 
+
+

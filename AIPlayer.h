@@ -10,11 +10,11 @@ class AIPlayer: public Player {
 public:
 /***************************************************************************************************
 * constructor name:AIPlayer
-* the input: Contains x
+* the input: Contains x and a Display object pointer display
 * the output: none
 * the function operation:initializes by using the base Player constructor
 ***************************************************************************************************/
-    explicit AIPlayer(Contains x);
+    explicit AIPlayer(Display *display,Contains x);
 /***************************************************************************************************
 * constructor name:AIPlayer
 * the input: other player
@@ -24,7 +24,7 @@ public:
     AIPlayer(const Player &other);
     //all has description in Player class
     void preMovePrint(Board *board);
-    int postMovePrint();
+    int postMovePrint(Board *board);
 /***************************************************************************************
 * function name: chooseMove
 * the input: Board* board,GameLogic* logic

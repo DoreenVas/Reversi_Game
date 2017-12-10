@@ -5,7 +5,7 @@
 #include "DefaultLogic.h"
 
 
-AIPlayer::AIPlayer(Contains x):Player::Player(x){}
+AIPlayer::AIPlayer(Display *display,Contains x):Player::Player(display,x){}
 AIPlayer::AIPlayer(const Player &other) : Player::Player(other) {}
 
 void AIPlayer::preMovePrint(Board *board) {
@@ -16,7 +16,7 @@ pair<int,int> AIPlayer::chooseMove(Board *board,GameLogic* logic) {
     int minScoreForPlayerMove=INT_MAX;
     int rowMin=INT_MAX;
     int colMin=INT_MAX;
-    possibleMovesVector(board);
+    vector< pair<int,int> > movesVec=possibleMovesVector(board);
     for(int i=0;i<movesVec.size();i++) {
         int maxScoreForRivalMove=INT_MIN;
         Board boardCopy(*board);
@@ -58,9 +58,8 @@ pair<int,int> AIPlayer::chooseMove(Board *board,GameLogic* logic) {
     return chosenMove;
 }
 
-int AIPlayer::postMovePrint(){
-    cout <<type<< " played  " <<chosenMove.first+1<<","<<chosenMove.second+1<<  endl;
-    return 0;
+int AIPlayer::postMovePrint(Board *board){
+    display->printChosenMove(chosenMove,type);
 }
 
 

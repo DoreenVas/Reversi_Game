@@ -2,39 +2,38 @@
 #include <iostream>
 #include "HumanPlayer.h"
 #include <limits>
-#include <cstdlib>
 
 using namespace std;
 
-HumanPlayer::HumanPlayer(Contains x,int gameType):Player(x),gameType(gameType),connector("0",0){}//calls the Class 'Player' constructor
+HumanPlayer::HumanPlayer(Display *display,Contains x,int gameType):Player(display,x),gameType(gameType)
+        ,connector("0",0){}//calls the Class 'Player' constructor
 
-HumanPlayer::HumanPlayer(Contains x, int gameType, ClientServerCommunication connector):Player(x)
-        ,gameType(gameType),connector(connector) {}
+HumanPlayer::HumanPlayer(Display *display,Contains x, int gameType, ClientServerCommunication connector)
+        :Player(display,x),gameType(gameType),connector(connector) {}
 
 HumanPlayer::HumanPlayer(const Player &other):Player(other),connector("0",0){}
 
 
 void HumanPlayer::preMovePrint(Board *board) {
-    cout <<type<< ": It's your move" << endl;
-    cout << "Your possible moves are: ";
-    possibleMovesVector(board);
-    printPossibleMoves();
+    display->yourMove(type);
+    vector< pair<int,int> > movesVec=possibleMovesVector(board);
+    display->printPossibleMoves(movesVec);
 }
 
 pair<int,int> HumanPlayer::chooseMove(Board* board,GameLogic* logic) {
     int a,b;
     bool validInput=false;
-    cout << endl << "Please enter your move, write row than space than col: " << endl;
+    display->enterMove();
     while (!validInput) {
         cin >> a >> b;
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "that is not an integer, try again" << endl;
+            display->printMessage("that is not an integer, try again");
         } else if (a > board->getBoardSize() || a < 1 || b > board->getBoardSize() || b < 1) {
-            cout << "incorrect choice" << endl;
+            display->printMessage("incorrect choice");
         } else if (!board->cellAt(a - 1, b - 1)->isOption()) {
-            cout << "that cell is not a possible move, try again" << endl;
+            display->printMessage("that cell is not a possible move, try again");
         } else {
             validInput = true;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -47,18 +46,12 @@ pair<int,int> HumanPlayer::chooseMove(Board* board,GameLogic* logic) {
 }
 
 
-void HumanPlayer::printPossibleMoves() {
-    for (int i=0;i<movesVec.size();i++){
-        cout<< "(" <<movesVec[i].first+1<< "," <<movesVec[i].second+1<< ") ";
-    }
-}
-
-int HumanPlayer::postMovePrint() {
+int HumanPlayer::postMovePrint(Board *board) {
     if (gameType==REMOTE_GAME){
         try{
             connector.sendMoveToServer(chosenMove);
         }catch (const char *msg){
-            cout<<msg<<endl;
+            display->printMessage(msg);
             return PROBLEM;
         }
     }

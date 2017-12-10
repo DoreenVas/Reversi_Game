@@ -34,6 +34,13 @@ public:
 * the function operation:deletes the player and the rival objects to free the memory
 ***************************************************************************************************/
     ~GameLogic();
+/***************************************************************************************
+* function name:  possibleMoves (pure virtual)
+* the input: none
+* the output: none
+* the function operation:in the DefaultLogic Class
+****************************************************************************************/
+    virtual void possibleMoves(Board *board)=0;
 
 /***************************************************************************************
 * function name:  resetPossibleMoves
@@ -42,13 +49,6 @@ public:
 * the function operation:for every cell in board the option is now false for a move and the flipOption table is initialized
 ****************************************************************************************/
     void resetPossibleMoves(Board *board);
-/***************************************************************************************
-* function name:  possibleMoves (pure virtual)
-* the input: none
-* the output: none
-* the function operation:in the DefaultLogic Class
-****************************************************************************************/
-    virtual void possibleMoves(Board *board)=0;
 /***************************************************************************************
 * function name:  makeMove (pure virtual)
 * the input: none

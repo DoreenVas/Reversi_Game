@@ -3,6 +3,7 @@
 #ifndef HW1_GAME_H
 #define HW1_GAME_H
 #include "GameLogic.h"
+#include "Display.h"
 
 /*****************************************************************************************************
 * class name: Game
@@ -16,7 +17,7 @@ public:
 * the output: none
 * the function operation:initializes the pointer fields                                 *
 ***************************************************************************************************/
-    Game(Player *player1P,Player *player2P,Board *boardP, GameLogic *logicP);
+    Game(Player *player1P,Player *player2P,Board *boardP, GameLogic *logicP ,Display *display);
 /***************************************************************************************
 * function name: play
 * the input: none
@@ -31,15 +32,7 @@ private:
     GameLogic *logic;
     Board *board;
     bool gameOn;//true if the game is still on
-
-
-/***************************************************************************************
-* function name: printEnd
-* the input: none
-* the output: prints the winner and the score
-* the function operation: prints
-****************************************************************************************/
-    void printEnd()const;
+    Display *display;
 
 /***************************************************************************************
 * function name: swap

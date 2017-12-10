@@ -3,6 +3,7 @@
 #include "../Board.h"
 #include "../DefaultLogic.h"
 #include "../HumanPlayer.h"
+#include "../ConsoleDisplay.h"
 
 /*
 we make the next board and check for possible moves
@@ -27,8 +28,10 @@ its player 'x' turn and we especially want to check that the bound at 3,1 is rec
  */
 TEST (test_DefaultLogic,possible_moves_check) {
     Board board(8);
-    HumanPlayer *player=new HumanPlayer(Black,LOCAL_GAME);
-    HumanPlayer *rival=new HumanPlayer(White,LOCAL_GAME);
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    HumanPlayer *player=new HumanPlayer(displayP,Black,LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(displayP,White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     player->setScore(5);
     rival->setScore(5);
@@ -76,8 +79,10 @@ its player 'x' turn and we expect to see no moves possible
  */
 TEST (test_DefaultLogic,no_moves_check) {
     Board board(4);
-    HumanPlayer *player=new HumanPlayer(Black,LOCAL_GAME);
-    HumanPlayer *rival=new HumanPlayer(White,LOCAL_GAME);
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    HumanPlayer *player=new HumanPlayer(displayP,Black,LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(displayP,White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     player->setScore(4);
     rival->setScore(6);
@@ -119,8 +124,10 @@ TEST (test_DefaultLogic,no_moves_check) {
  */
 TEST (test_DefaultLogic,flip_options_check) {
     Board board(4);
-    HumanPlayer *rival=new HumanPlayer(Black,LOCAL_GAME);
-    HumanPlayer *player=new HumanPlayer(White,LOCAL_GAME);
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    HumanPlayer *rival=new HumanPlayer(displayP,Black,LOCAL_GAME);
+    HumanPlayer *player=new HumanPlayer(displayP,White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     player->setScore(2);
     rival->setScore(5);
@@ -161,8 +168,10 @@ check make move correctness and players score correct update
 */
 TEST (test_DefaultLogic,make_move_check) {
     Board board(4);
-    HumanPlayer *player=new HumanPlayer(Black,LOCAL_GAME);
-    HumanPlayer *rival=new HumanPlayer(White,LOCAL_GAME);
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    HumanPlayer *player=new HumanPlayer(displayP,Black,LOCAL_GAME);
+    HumanPlayer *rival=new HumanPlayer(displayP,White,LOCAL_GAME);
     DefaultLogic logic=DefaultLogic(player,rival);
     logic.possibleMoves(&board);
     logic.makeMove(0,1,&board);

@@ -14,7 +14,7 @@ ClientServerCommunication::ClientServerCommunication(const char *serverIP, int s
         serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
 }
 
-void ClientServerCommunication::connectToServer() {
+void ClientServerCommunication::connectToServer(Display *displayP) {
     // Create a socket point
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket == -1) {
@@ -42,8 +42,9 @@ void ClientServerCommunication::connectToServer() {
     if (connect(clientSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) == -1) {
         throw "Error connecting to server";
     }
-    cout << "Connected to server" << endl;
-    cout << "Waiting for other player to join..." << endl;
+    displayP->printMessage("Connected to server");
+    displayP->printMessage("Waiting for other player to join...");
+
 }
 
 int ClientServerCommunication::getClientTurn() {

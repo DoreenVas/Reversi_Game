@@ -3,6 +3,8 @@
 #define HW1_CLIENTSERVERCOMMUNICATION_H
 
 #include <utility>
+#include "Display.h"
+
 using namespace std;
 
 /*****************************************************************************************************
@@ -24,7 +26,7 @@ public:
 * the output: none
 * the function operation:connecting client to the server
 ****************************************************************************************/
-    void connectToServer();
+    void connectToServer(Display *displayP);
 /***************************************************************************************
 * function name: getClientTurn
 * the input: none

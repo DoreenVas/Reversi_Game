@@ -18,8 +18,7 @@ public:
 * the output: none
 * the function operation:initializes by using the base Player constructor,and the given value connector                             *
 ***************************************************************************************************/
-    RemotePlayer(Contains x, ClientServerCommunication connector);
-    void preMovePrint(Board *board);
+    RemotePlayer(Display *display,Contains x, ClientServerCommunication connector);
 /***************************************************************************************
 * function name: chooseMove
 * the input: Board* board,GameLogic* logic
@@ -27,7 +26,8 @@ public:
 * the function operation: reads the move from the server
 ****************************************************************************************/
     pair<int,int> chooseMove(Board* board,GameLogic* logic);
-    int postMovePrint();
+    void preMovePrint(Board *board);
+    int postMovePrint(Board *board);
 
 private:
     ClientServerCommunication connector;

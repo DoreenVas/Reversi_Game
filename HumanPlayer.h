@@ -12,19 +12,19 @@ class HumanPlayer: public Player {
 public:
 /***************************************************************************************************
 * constructor name:HumanPlayer
-* the input: Contains x, int gameType
+* the input: Contains x, int gameType,Display *display
 * the output: none
 * the function operation:initializes by using the base Player constructor,and the given values,
  * also initializes the connector to a default non used server for compilation
 ***************************************************************************************************/
-    HumanPlayer(Contains x, int gameType);
+    HumanPlayer(Display *display,Contains x, int gameType);
 /***************************************************************************************************
 * constructor name:HumanPlayer
-* the input: Contains x,int gameType,ClientServerCommunication connector
+* the input: Contains x,int gameType,Display *display,ClientServerCommunication connector
 * the output: none
 * the function operation:initializes by using the base Player constructor and the values received
 ***************************************************************************************************/
-    HumanPlayer(Contains x, int gameType,ClientServerCommunication connector);
+    HumanPlayer(Display *display,Contains x, int gameType,ClientServerCommunication connector);
 /***************************************************************************************************
 * constructor name:HumanPlayer
 * the input: other player
@@ -35,7 +35,7 @@ public:
     HumanPlayer(const Player &other);
     //all has description in Player class
     void preMovePrint(Board *board);
-    int postMovePrint();
+    int postMovePrint(Board *board);
 /***************************************************************************************
 * function name: chooseMove
 * the input: Board* board,GameLogic* logic
@@ -46,13 +46,7 @@ public:
     int gameType;
 
 private:
-/***************************************************************************************
-* function name: printPossibleMoves
-* the input: none
-* the output: none
-* the function operation:goes throw the vector of moves and prints each move
-****************************************************************************************/
-    void printPossibleMoves();
+
     ClientServerCommunication connector;
 };
 

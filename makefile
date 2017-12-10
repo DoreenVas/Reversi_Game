@@ -1,6 +1,6 @@
 
 a.out: compileAll
-	g++ *.o 
+	g++ *.o -o client.out
 	rm -f *.o
 
 compileAll: *.h *.cpp

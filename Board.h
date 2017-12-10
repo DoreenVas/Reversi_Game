@@ -44,14 +44,6 @@ public:
 	Board(const Board &other);
 
 	/***************************************************************************************
-	* function name: printBoard
-	* the input: none
-	* the output:none
-	* the function operation:prints a visual table of the board we created
-	****************************************************************************************/
-	void printBoard() const;
-
-	/***************************************************************************************
 	* function name: cellAt
 	* the input: row and col
 	* the output: a pointer to the cell which is located in (row,col) in the board

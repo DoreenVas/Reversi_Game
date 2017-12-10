@@ -7,8 +7,8 @@
 #include "AIPlayer.h"
 #include "DefaultLogic.h"
 #include "RemotePlayer.h"
-#include <limits>
 #include <fstream>
+#include "ConsoleDisplay.h"
 
 using namespace std;
 
@@ -16,55 +16,32 @@ using namespace std;
 #define LOCAL_GAME 2
 #define REMOTE_GAME 3
 
-int getOpponentType(){
-    cout<<"Choose an opponent type:"<<endl;
-    cout<<"1. a human local player"<<endl;
-    cout<<"2. an AI player"<<endl;
-    cout<<"3. a remote player"<<endl;
-    bool validInput=false;
-    int opponentType;
-    while (!validInput) {
-        cin >> opponentType ;
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "that is not an integer, try again" << endl;
-        }
-        else if (opponentType != 1 && opponentType !=2 && opponentType !=3)
-            cout << "valid input is 1-3, try again" << endl;
-        else {
-            validInput = true;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin.clear();
-        }
-    }
-    return opponentType;
-}
-
 // makes the objects and runs the game
 int main(){
     Board board(4);
     Board *boardP=&board;
     Player *player1P;
     Player *player2P;
-    int opponentType=getOpponentType();
+    ConsoleDisplay display=ConsoleDisplay();
+    Display *displayP=&display;
+    int opponentType=display.getOpponentType();
     switch (opponentType){
         case 1:
-            player1P=new HumanPlayer(Black,LOCAL_GAME);
-            player2P =new HumanPlayer(White,LOCAL_GAME);
+            player1P=new HumanPlayer(displayP,Black,LOCAL_GAME);
+            player2P =new HumanPlayer(displayP,White,LOCAL_GAME);
             break;
         case 2:
-            player1P=new HumanPlayer(Black,LOCAL_GAME);
-            player2P =new AIPlayer(White);
+            player1P=new HumanPlayer(displayP,Black,LOCAL_GAME);
+            player2P =new AIPlayer(displayP,White);
             break;
         case 3:
             //read ip and port from file
             int port;
             string ip;
             ifstream settingFile;
-            settingFile.open("../client_settings.txt");
+            settingFile.open("client_settings.txt");
             if(!settingFile.is_open()){
-                cout<<"failed to open file";
+                display.printMessage("failed to open file");
                 return 0;
             }
             settingFile>>ip;
@@ -74,23 +51,25 @@ int main(){
 
             ClientServerCommunication client(ip2, port);
             try{
-               client.connectToServer();
+               client.connectToServer(displayP);
             }catch (const char *msg){
-                cout<<"Failed to connect to server. Reason:"<<msg<<endl;
+                display.printMessage("Failed to connect to server. Reason:");
+                display.printMessage(msg);
                 return 0;
             }
             int clientTurn=client.getClientTurn();
             if(clientTurn==FIRST_PLAYER){
-                player1P=new HumanPlayer(Black,REMOTE_GAME,client);
-                player2P =new RemotePlayer(White,client);
+                player1P=new HumanPlayer(displayP,Black,REMOTE_GAME,client);
+                player2P =new RemotePlayer(displayP,White,client);
             }else{
-                player1P =new RemotePlayer(Black,client);
-                player2P=new HumanPlayer(White,REMOTE_GAME,client);
+                player1P =new RemotePlayer(displayP,Black,client);
+                player2P=new HumanPlayer(displayP,White,REMOTE_GAME,client);
             }
     }
 
     DefaultLogic logic= DefaultLogic(player1P,player2P);
     GameLogic *logicP= &logic;
-    Game game(player1P,player2P,boardP,logicP);
+    Game game(player1P,player2P,boardP,logicP,displayP);
     game.play();
 }
+

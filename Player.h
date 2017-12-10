@@ -4,6 +4,7 @@
 #define HW1_PLAYER_H
 #include "Board.h"
 #include "GameLogic.h"
+#include "Display.h"
 #include <vector>
 using namespace std;
 #define PROBLEM -5
@@ -18,11 +19,11 @@ class Player{
 public:
 /***************************************************************************************************
 * constructor name:Player
-* the input: Contains x
+* the input: Contains x, Display object pointer display
 * the output: none
 * the function operation:initializes the score to (2),noMoves to (false),and disk to the type we got(x)                               *
 ***************************************************************************************************/
-    explicit Player(Contains x);
+    explicit Player(Display *display,Contains x);
 /***************************************************************************************************
 * constructor name:Player
 * the input: other player
@@ -78,7 +79,7 @@ public:
 * the output: none
 * the function operation: makes a print after the move is made
 ****************************************************************************************/
-    virtual int postMovePrint()=0;
+    virtual int postMovePrint(Board *board)=0;
 /***************************************************************************************
 * function name: chooseMove (pure virtual)
 * the input: board, logic pointers
@@ -86,22 +87,21 @@ public:
 * the function operation: return the row and col (in a pair) of the next move the player wants to make
 ****************************************************************************************/
     virtual pair<int,int> chooseMove(Board* board,GameLogic* logic)=0;
-
 /***************************************************************************************
 * function name: possibleMovesVector
 * the input: pointer to the board
-* the output: none
+* the output: vector< pair<int,int> >
 * the function operation:goes throw the board and for each cell if he's an option adds
-* it to the vector. if the player has no moves than he updates setNoMoves to false
+* it to the vector.returns the vector.
 ****************************************************************************************/
-    void possibleMovesVector(Board *board);
+    vector< pair<int,int> > possibleMovesVector(Board *board);
     pair<int,int> chosenMove;
 
 protected:
+    Display *display;
     Contains type;
     int score;
     bool noMoves;
-    vector< pair<int,int> > movesVec;// a vector of all the cells which are possible moves
 
 };
 
