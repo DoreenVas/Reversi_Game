@@ -7,7 +7,7 @@
 #include "Display.h"
 #include <vector>
 using namespace std;
-#define PROBLEM -5
+#define PROBLEM -1
 #define NO_MOVE -2
 class GameLogic;
 

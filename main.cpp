@@ -23,7 +23,7 @@ bool commandLoop(ClientServerCommunication *client,Display *displayP);
 
 // makes the objects and runs the game
 int main(){
-    Board board(8);
+    Board board(4);
     Board *boardP=&board;
     Player *player1P;
     Player *player2P;
@@ -44,7 +44,7 @@ int main(){
             int port;
             string ip;
             ifstream settingFile;
-            settingFile.open("client_settings.txt");
+            settingFile.open("../client_settings.txt");
             if(!settingFile.is_open()){
                 displayP->printMessage("failed to open file");
                 return 0;
@@ -68,7 +68,11 @@ int main(){
                 displayP->printMessage(msg);
                 return 0;
             }
-            if(clientTurn==FIRST_PLAYER){
+            if(clientTurn==FAIL){
+                displayP->printMessage("Server disconnected");
+                return 0;
+            }
+            else if(clientTurn==FIRST_PLAYER){
                 player1P=new HumanPlayer(displayP,Black,REMOTE_GAME,client);
                 player2P =new RemotePlayer(displayP,White,client);
             }else{
