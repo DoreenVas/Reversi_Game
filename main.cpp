@@ -23,7 +23,7 @@ bool commandLoop(ClientServerCommunication *client,Display *displayP);
 
 // makes the objects and runs the game
 int main(){
-    Board board(4);
+    Board board(8);
     Board *boardP=&board;
     Player *player1P;
     Player *player2P;
@@ -44,7 +44,7 @@ int main(){
             int port;
             string ip;
             ifstream settingFile;
-            settingFile.open("../client_settings.txt");
+            settingFile.open("client_settings.txt");
             if(!settingFile.is_open()){
                 displayP->printMessage("failed to open file");
                 return 0;
@@ -84,6 +84,7 @@ int main(){
     game.play();
 }
 
+//in charge command communication with the server
 bool commandLoop(ClientServerCommunication *client,Display *displayP) {
     int status = FAIL;
     while (status == FAIL) {

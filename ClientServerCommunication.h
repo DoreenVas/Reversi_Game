@@ -56,17 +56,17 @@ public:
 ****************************************************************************************/
     void sendCommandToServer(string &command);
 /***************************************************************************************
-* function name: sendMoveToServer
-* the input: pair<int,int> chosenMove
-* the output: none
-* the function operation: sends the move to the server int by int, throws exception if something went wrong
+* function name: getStatusFromServer
+* the input: none
+* the output: returns an integer status 0/-1 (success/fail)
+* the function operation: reads from the server
 ****************************************************************************************/
     int getStatusFromServer();
 /***************************************************************************************
-* function name: sendMoveToServer
-* the input: pair<int,int> chosenMove
-* the output: none
-* the function operation: sends the move to the server int by int, throws exception if something went wrong
+* function name: getNameFromServer
+* the input: none
+* the output: string of available game name
+* the function operation: reads from the server
 ****************************************************************************************/
     string getNameFromServer();
 
