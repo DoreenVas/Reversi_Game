@@ -123,3 +123,35 @@ char ConsoleDisplay::playerDisk(Contains type) const {
     }
     return playerDisk;
 }
+
+int ConsoleDisplay::getCommand() const {
+    cout<<"Choose your game option:"<<endl;
+    cout<<"1. start a new game"<<endl;
+    cout<<"2. join an existing game"<<endl;
+    cout<<"3. see list of available games"<<endl;
+    bool validInput=false;
+    int opponentType;
+    while (!validInput) {
+        cin >> opponentType ;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "that is not an integer, try again" << endl;
+        }
+        else if (opponentType != 1 && opponentType !=2 && opponentType !=3)
+            cout << "valid input is 1-3, try again" << endl;
+        else {
+            validInput = true;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.clear();
+        }
+    }
+    return opponentType;
+}
+
+string ConsoleDisplay::chooseName() const {
+    cout<<"choose a name for the game"<<endl;
+    string name;
+    cin >> name;
+    return name;
+}

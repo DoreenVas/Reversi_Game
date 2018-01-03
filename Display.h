@@ -13,11 +13,11 @@ using namespace std;
 class Display {
 public:
     /***************************************************************************************
-	* function name: printBoard
-	* the input: Board *board
-	* the output:prints a visual table of the board we created
-	* the function operation:goes throw every cell in the board
-	****************************************************************************************/
+    * function name: printBoard
+    * the input: Board *board
+    * the output:prints a visual table of the board we created
+    * the function operation:goes throw every cell in the board
+    ****************************************************************************************/
     virtual void printBoard(Board *board) const=0;
     /***************************************************************************************
      * function name: printChosenMove
@@ -75,6 +75,20 @@ public:
     * the function operation:directly
     ****************************************************************************************/
     virtual void enterMove()const=0;
+    /***************************************************************************************
+   * function name: getCommand
+   * the input: none
+   * the output: the number the player chose (1/2/3)
+   * the function operation: takes input from the console and returns the number
+   ****************************************************************************************/
+    virtual int getCommand() const=0;
+    /***************************************************************************************
+    * function name: chooseName
+     * the input: none
+     * the output: name for game
+     * the function operation: takes input from the console and returns the string
+     ****************************************************************************************/
+    virtual string chooseName() const=0;
 
 };
 

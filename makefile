@@ -4,4 +4,4 @@ a.out: compileAll
 	rm -f *.o
 
 compileAll: *.h *.cpp
-	g++ -c *.cpp
+g++ -c *.cpp

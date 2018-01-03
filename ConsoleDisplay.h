@@ -20,6 +20,9 @@ public:
     void printPossibleMoves( vector<pair<int, int> > movesVec)const;
     void yourMove(Contains type) const;
     void enterMove()const;
+    int getCommand() const;
+    string chooseName() const;
+
 
 private:
     /***************************************************************************************

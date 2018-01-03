@@ -48,6 +48,27 @@ public:
 * the function operation:reads the move from the server int by int, throws exception if something went wrong
 ****************************************************************************************/
     pair <int,int> getMoveFromServer();
+/***************************************************************************************
+* function name: sendMoveToServer
+* the input: pair<int,int> chosenMove
+* the output: none
+* the function operation: sends the move to the server int by int, throws exception if something went wrong
+****************************************************************************************/
+    void sendCommandToServer(string &command);
+/***************************************************************************************
+* function name: sendMoveToServer
+* the input: pair<int,int> chosenMove
+* the output: none
+* the function operation: sends the move to the server int by int, throws exception if something went wrong
+****************************************************************************************/
+    int getStatusFromServer();
+/***************************************************************************************
+* function name: sendMoveToServer
+* the input: pair<int,int> chosenMove
+* the output: none
+* the function operation: sends the move to the server int by int, throws exception if something went wrong
+****************************************************************************************/
+    string getNameFromServer();
 
 private:
     const char *serverIP;
